@@ -30,11 +30,9 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
         viewModel.name.observe(this, { text ->
-
             val chars = text.toCharArray()
             val result = convertToMorseCode(chars)
             tvMorseCode.text = result
-
         })
 
         etPlainText.addTextChangedListener(object : TextWatcher {
@@ -107,7 +105,7 @@ class MainActivity : AppCompatActivity() {
 
         for (character in charArray) {
             val myChar = character.toUpperCase()
-            val morseChar = morseCodeMap.getValue(myChar.toString())
+            val morseChar = morseCodeMap.getValue(myChar.toString()).plus(" ")
             stringBuilder.append(morseChar)
 
         }
