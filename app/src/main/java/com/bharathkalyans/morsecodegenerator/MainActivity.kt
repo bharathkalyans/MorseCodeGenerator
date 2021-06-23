@@ -19,7 +19,55 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
-        val MORSE_CODE_MAP = mapOf<String, String>(
+
+        viewModel.name.observe(this, { text ->
+
+            val chars = text.toCharArray()
+            val result = convertToMorseCode(chars)
+            tvMorseCode.text = result
+
+        })
+
+        etPlainText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.updateName(s.toString())
+            }
+        })
+
+        /*viewModel.seconds.observe(this, {
+            tvSeconds.text = it.toString()
+        })
+
+        viewModel.finished.observe(this, {
+            if (it) {
+                Toast.makeText(this, "Completed", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        btnStart.setOnClickListener {
+            if (etTotalSeconds.text.isEmpty() || etTotalSeconds.text.length < 4) {
+                Toast.makeText(this, "Please Enter Correct Values!", Toast.LENGTH_SHORT).show()
+            } else {
+                viewModel.timerValue.value = etTotalSeconds.text.toString().toLong()
+                viewModel.startTimer()
+            }
+        }
+        btnStop.setOnClickListener {
+            tvSeconds.text = "0"
+            viewModel.stopTimer()
+        }*/
+    }
+
+    private fun convertToMorseCode(charArray: CharArray): String {
+        val morseCodeMap = mapOf(
             "A" to "*_",
             "B" to "_***",
             "C" to "_*_*",
@@ -65,48 +113,20 @@ class MainActivity : AppCompatActivity() {
             ")" to "_*__*_",
             "-" to "_****_",
             "\"" to "*_**_*",
+            " " to " "
         )
 
-        viewModel.name.observe(this, {
-            tvMorseCode.text = it.toString()
-        })
+        val stringBuilder = StringBuilder()
 
-        etPlainText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        for (character in charArray) {
+            val myChar = character.toUpperCase()
+            val morseChar = morseCodeMap.getValue(myChar.toString())
+            stringBuilder.append(morseChar)
 
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                viewModel.updateName(s.toString())
-            }
-        })
-
-        /*viewModel.seconds.observe(this, {
-            tvSeconds.text = it.toString()
-        })
-
-        viewModel.finished.observe(this, {
-            if (it) {
-                Toast.makeText(this, "Completed", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-        btnStart.setOnClickListener {
-            if (etTotalSeconds.text.isEmpty() || etTotalSeconds.text.length < 4) {
-                Toast.makeText(this, "Please Enter Correct Values!", Toast.LENGTH_SHORT).show()
-            } else {
-                viewModel.timerValue.value = etTotalSeconds.text.toString().toLong()
-                viewModel.startTimer()
-            }
         }
-        btnStop.setOnClickListener {
-            tvSeconds.text = "0"
-            viewModel.stopTimer()
-        }*/
+
+        return stringBuilder.toString()
     }
+
 
 }
