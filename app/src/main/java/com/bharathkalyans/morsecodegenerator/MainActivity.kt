@@ -1,5 +1,8 @@
 package com.bharathkalyans.morsecodegenerator
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,15 +14,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.bharathkalyans.morsecodegenerator.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityMainBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         val viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
@@ -119,7 +123,17 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.copyMorseCode -> {
-                copyMorseCode()
+                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val text = binding.tvMorseCode.text.toString()
+                val clip: ClipData =
+                    ClipData.newPlainText("Morse Code", text)
+
+                clipboard.setPrimaryClip(clip)
+                Snackbar.make(this, binding.etPlainText, "Morse Code Copied!", Snackbar.LENGTH_LONG).show()
+                true
+            }
+            R.id.clearAllFields -> {
+                clearAllFields()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -127,7 +141,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun copyMorseCode() {
-        Toast.makeText(this, "Copied the Morse Code!", Toast.LENGTH_SHORT).show()
+    private fun clearAllFields() {
+        binding.tvMorseCode.text = ""
+        binding.etPlainText.text = null
+        Toast.makeText(this, "Cleared All Fields!", Toast.LENGTH_SHORT).show()
     }
+
+
 }
