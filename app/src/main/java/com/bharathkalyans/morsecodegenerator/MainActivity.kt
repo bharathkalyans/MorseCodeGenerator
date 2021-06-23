@@ -1,9 +1,12 @@
 package com.bharathkalyans.morsecodegenerator
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -43,29 +46,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
-        /*viewModel.seconds.observe(this, {
-            tvSeconds.text = it.toString()
-        })
-
-        viewModel.finished.observe(this, {
-            if (it) {
-                Toast.makeText(this, "Completed", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-        btnStart.setOnClickListener {
-            if (etTotalSeconds.text.isEmpty() || etTotalSeconds.text.length < 4) {
-                Toast.makeText(this, "Please Enter Correct Values!", Toast.LENGTH_SHORT).show()
-            } else {
-                viewModel.timerValue.value = etTotalSeconds.text.toString().toLong()
-                viewModel.startTimer()
-            }
-        }
-        btnStop.setOnClickListener {
-            tvSeconds.text = "0"
-            viewModel.stopTimer()
-        }*/
     }
 
     private fun convertToMorseCode(charArray: CharArray): String {
@@ -130,5 +110,24 @@ class MainActivity : AppCompatActivity() {
         return stringBuilder.toString()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.custom_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.copyMorseCode -> {
+                copyMorseCode()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    }
+
+    private fun copyMorseCode() {
+        Toast.makeText(this, "Copied the Morse Code!", Toast.LENGTH_SHORT).show()
+    }
 }
