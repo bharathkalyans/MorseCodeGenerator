@@ -1,5 +1,6 @@
 package com.bharathkalyans.morsecodegenerator
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.updateName(s.toString())
             }
         })
+
 
         /*viewModel.seconds.observe(this, {
             tvSeconds.text = it.toString()

@@ -17,7 +17,6 @@ class MyViewModel : ViewModel() {
     }
 
 
-
     /* private lateinit var timer: CountDownTimer
      private val _seconds = MutableLiveData<Int>()
 
