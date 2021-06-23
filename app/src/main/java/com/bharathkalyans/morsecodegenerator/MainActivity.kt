@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
-
         viewModel.name.observe(this, { text ->
 
             val chars = text.toCharArray()
