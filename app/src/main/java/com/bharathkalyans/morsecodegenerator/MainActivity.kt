@@ -3,6 +3,7 @@ package com.bharathkalyans.morsecodegenerator
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +11,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -120,6 +122,7 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.copyMorseCode -> {
@@ -129,7 +132,11 @@ class MainActivity : AppCompatActivity() {
                     ClipData.newPlainText("Morse Code", text)
 
                 clipboard.setPrimaryClip(clip)
-                Snackbar.make(this, binding.etPlainText, "Morse Code Copied!", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(this, binding.etPlainText, "Morse Code Copied!", Snackbar.LENGTH_LONG)
+                    .setAction(R.string.undo) {
+                        clipboard.clearPrimaryClip()
+                    }
+                    .show()
                 true
             }
             R.id.clearAllFields -> {

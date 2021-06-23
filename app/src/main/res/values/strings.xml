@@ -3,5 +3,6 @@
     <string name="morse_code">Morse Code!</string>
     <string name="enter_message">Enter Message</string>
     <string name="copy">Copy</string>
+    <string name="undo">UNDO</string>
     <string name="clear_all">Clear All</string>
 </resources>
