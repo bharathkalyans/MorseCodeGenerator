@@ -98,7 +98,26 @@ class MainActivity : AppCompatActivity() {
             ")" to "_*__*_",
             "-" to "_****_",
             "\"" to "*_**_*",
-            " " to " "
+            " " to " ",
+            "!" to "!",
+            "~" to "~",
+            "`" to "`",
+            "@" to "@",
+            "$" to "$",
+            "#" to "#",
+            "%" to "%",
+            "^" to "^",
+            "&" to "&",
+            "-" to "-",
+            "+" to "+",
+            ";" to ";",
+            ":" to ":",
+            "/" to "/",
+            "{" to "{",
+            "[" to "[",
+            "]" to "]",
+            "}" to "}",
+            "|" to "|",
         )
 
         val stringBuilder = StringBuilder()
