@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         //Removes Dark Mode!
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         super.onCreate(savedInstanceState)
 
@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun convertToMorseCode(charArray: CharArray): String {
+
+
         val morseCodeMap = mapOf(
             "A" to "._",
             "B" to "_...",
@@ -103,30 +105,41 @@ class MainActivity : AppCompatActivity() {
             "-" to "_...._",
             "\"" to "._.._.",
             " " to "  ",
-            "!" to "!",
-            "~" to "~",
-            "`" to "`",
-            "@" to "@",
-            "$" to "$",
-            "#" to "#",
-            "%" to "%",
-            "^" to "^",
-            "&" to "&",
-            "-" to "-",
-            "+" to "+",
-            ";" to ";",
-            ":" to ":",
-            "/" to "/",
-            "{" to "{",
-            "[" to "[",
-            "]" to "]",
-            "}" to "}",
-            "|" to "|",
+
+            )
+
+        val illegalCharacters = mapOf(
+            "!" to "",
+            "~" to "",
+            "`" to "",
+            "@" to "",
+            "$" to "",
+            "#" to "",
+            "%" to "",
+            "^" to "",
+            "&" to "",
+            "-" to "",
+            "+" to "",
+            ";" to "",
+            ":" to "",
+            "/" to "",
+            "{" to "",
+            "[" to "",
+            "]" to "",
+            "}" to "",
+            "|" to "",
+            "=" to "",
+            "*" to "",
         )
+
 
         val stringBuilder = StringBuilder()
 
         for (character in charArray) {
+
+            if (illegalCharacters.containsKey(character.toString()))
+                continue
+
             val myChar = character.toUpperCase()
             val morseChar = morseCodeMap.getValue(myChar.toString()).plus(" ")
             stringBuilder.append(morseChar)
